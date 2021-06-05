@@ -51,6 +51,9 @@ sidebar.insertAdjacentHTML(
             ・<a href="https://0nu.be/" target="_blank" rel="noopener noreferrer">0nu.be (旧ホームページ)</a></br>
             ・<a href="https://zodiacnetwork.0nu.be/" target="_blank" rel="noopener noreferrer">Zodiac Network</a></br>
             ・<a href="https://dotplants.net/" target="_blank" rel="noopener noreferrer">dotPlants</a>
+            <div class="category">寄付</div>
+            ・<a href="https://www.amazon.jp/hz/wishlist/ls/1RSKN9E87ZJLI?ref_=wl_share" target="_blank" rel="noopener noreferrer">Amazon</a></br>
+            ・<a href="https://kyash.vercel.app/?id=osuke&link=4255962729992799283" target="_blank" rel="noopener noreferrer">Kyash</a>
         </div>
         <div class="gallery">
             <div id="youtube" class="video">
