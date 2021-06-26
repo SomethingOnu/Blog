@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="ja-jp">
+    <head>
+        <meta charset="UTF-8" />
+        <title>パスカルの三角形を作ろう - おぬ的な気まぐれブログ</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        <link href="/assets/favicon.ico" rel="icon" />
+        <link href="/assets/apple-touch-icon.png" sizes="180x180" rel="apple-touch-icon" />
+
+        <meta property="og:url" content="http://blog.0nu.be/" />
+        <meta property="og:site_name" content="おぬ的な気まぐれブログ" />
+        <meta property="og:description" content="おぬ氏が日記や備忘録を纏めるだけのサイト" />
+        <meta property="og:type" content="blog" />
+        <meta property="og:image" content="/assets/thumbnail.png" />
+        <meta property="og:title" content="パスカルの三角形を作ろう - おぬ的な気まぐれブログ" />
+
+        <link href="/style.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;500&&display=swap" rel="stylesheet" />
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                    displayMath: [ ['$$','$$'], ["\\[","\\]"] ]
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <main>
+            <div id="header"></div>
+            <div id="main">
+                <div id="page" class="content">
+                    <div class="text">
+                        <!-- SoF -->
+                        <h2>パスカルの三角形とは</h2>
+
+                            <b>パスカルの三角形</b>とは法則に従って作られる数字の集合体であり、それは<b>二項係数</b>の特徴と一致する。…うん、駄目だね。順を追って説明しよう。</br>
+                            </br>
+                            こいつが持つ性質は様々だが、作り方は非常に単純である。まずは下の図を見てほしい。…そう、これが実態なのだ。
+
+                            <img src="/media/0016/01.png" />
+
+                            じっくりと眺めれば法則は分かると思うが…解説する。(偉い)
+
+                            <h3>作り方(簡単に)</h3>
+
+                                まず、<span class="red">0</span>段目に\(1\)を置く。1段目以降は両端に\(1\)を置き、その中には自分から見て右上と左上にある数字を加算したものが入る。それを繰り返すことで―――何と、完成である。どうじゃ、朝飯を作るよりも簡単じゃろ。
+
+                                <img src="/media/0016/02.png" />
+
+                            <h3>作り方(<span></span>\(_nC_r\)を使って)</h3>
+
+                                いとも簡単に作れてしまったパスカルの三角形だが、実は他にも作り方がある。それは確率を求めるときに使う\(_nC_r\)を利用する方法だ。…さすがに\(_nC_r\)が何なのか分からない人はｇｇってくれ。一応だが\(_nC_r=\dfrac{n!/(n-r)!}{r!}\)である。</br>
+                                </br>
+                                単刀直入に言ってしまえば、パスカルの三角形と\(_nC_r\)は下の図の通りに対応している。「<span class="s12">行数\(-1\)</span>\(C\)<span class="s12">列数\(-1\)</span>」を三角形上に並べることでパスカルの三角形と全く同じものが構築される、そんな感じ。
+
+                                <img src="/media/0016/03.png" />
+
+                            <h3>二項定理との関係性・利便性</h3>
+
+                                ここに2項の累乗の式\((a+b)^n\)がある。これを展開するとき、</br>
+                                </br>
+                                \(n=2\)であれば\(a^2+2ab+b^2\)、</br>
+                                \(n=3\)であれば\(a^3+3a^2b+3ab^2+b^3\)、</br>
+                                \(n=4\)であれば\(a^4+4a^3b+6a^2b^2+4ab^3+b^4\)</br>
+                                </br>
+                                …と、\(a^i\)と\(b^{n-i}\)のそれぞれの組み合わせ(\(i=0, 1, 2, \cdots n\))に加えて係数が出力される。所謂この展開は<b>二項定理</b>というもので、係数のことを<b>二項係数</b>と呼んだりもする。</br>
+                                </br>
+                                ここで一度、式と図を観察してほしい…先程の係数の配列は、何とパスカルの三角形に書かれている\(n\)行目の配列と一致するではないか！もしも君が各係数の値が公式\(_nC_r\)で求められることを知っていれば当たり前の話だと思うが、そこは生暖かい目で「パスカルの三角形は二項係数の値を一気に求められるんだな」と感動してほしい。
+
+                                <img src="/media/0016/04.png" />
+
+                                結論を言えばパスカルの三角形は単純なルールで求めることができ、それは\(_nC_r\)の一覧表であり、二項係数の値の一覧表でもある。余談だがそれ以外にも<b>フィボナッチ数列</b>や<b>最短経路</b>などを求める際に役に立つことから、非常に便利な図であると言える。興味のある方は是非、色々と調べてほしい。
+
+                        <h2>プログラムを書く</h2>
+
+                            さて、ここからがメインディッシュだ。前回と同じように、パスカルの三角形をプログラムで出力してみる。使う言語も同じくHSP3…許して。
+
+                            <h3>作る(<span></span>\(_nC_r\)を使って)</h3>
+
+                                実際に作る場合は、前者の簡単なルールよりも\(_nC_r\)を用いるほうが(<b>作るのは</b>)簡単なのだ。</br>
+                                </br>
+                                最初に全ての配列を出力するための変数と作る段数を決めよう。今回はnotepad系の命令を使うのでウィンドウの横幅と縦幅も指定する。まさか、無限に生成したらパソコンが死にますわ！
+
+                                <div class="blockcode">
+<pre>
+WinX = 640 // ---------------------- ウィンドウの横幅
+WinY = 480 // ---------------------- ウィンドウの縦幅
+PosX = (ginfo(20) - WinX) / 2 // --- ウィンドウの横位置(中央)
+PosY = (ginfo(21) - WinY) / 2 // --- ウィンドウの縦位置(中央)
+
+screen 0 , WinX,WinY , 0 , PosX,PosY // --- ウィンドウを生成
+font "Courier New" , 12 // ---------------- フォント名とフォントサイズ
+
+origin = 13 // ------ 作る段数
+notesel result // --- ここにパスカルの三角形を入れる
+</pre>
+                                </div>
+
+                                それでは\(_nC_r\)を並べるコードを一気にドーン！すまない、コメントを見ながら理解してほしい。
+
+                                <div class="blockcode">
+<pre>
+repeat origin // ------------------------- origin段分を生成する
+    sector = cnt // -------------------------- 段数を変数に保存する
+    export = ""+strf("%4d",sector)+" :" // --- 段数目の配列を入れる変数＆左側に段数を表示する ※0から始まるよ！
+
+    if sector != 0 { // ---- 0段目以外は例の処理をする
+        repeat sector + 1 // --- 段数目の配列を生成する (ex. 1段目なら2個あるよ)
+            export_buf = 0 // ------ この変数に配列一つ分の結果を出力する
+
+            // ----------- nCr = nPr / r! なので：
+            a = sector // ---- n
+            b = cnt + 1 // --- r
+            c = 1 // --------- nPrの値を入れる変数
+            d = 1 // --------- r!の値を入れる変数
+
+            repeat b - 1 // -------- 階上分(r回)処理を繰り返す (ex. 6C3なら6*5*4/3*2*1をするので)
+                c = c * (a - cnt) // --- (ex. 6P3なら6*5*4をするので)
+                d = d * (cnt + 1) // --- (ex. 3!なら3*2*1をするので)
+            loop
+
+            export_buf = c / d // ----------------------- 配列一つ分の結果を出力する
+            export = export+" "+strf("%6d",export_buf) // --- 段数目の配列に出力する
+        loop
+    } else { // ---------------------------- 0段目
+        export = export+" "+strf("%6d",1) // --- 1を出力する
+    }
+
+    noteadd export , cnt , 1 // --- 全体に(段数目の配列を)出力する
+loop
+</pre>
+                                </div>
+
+                                最後に結果を表示して完成。
+
+                                <div class="blockcode">
+<pre>
+objmode 2 // ----------------------- mesboxのフォントを指定
+mesbox result , WinX,WinY , 4 // --- 出力！
+</pre>
+                                </div>
+
+                                出力結果はこんな感じ。三角形は少し歪だが、細かいことは気にしたら負け。
+
+                                <img src="/media/0016/05.png" />
+
+                            <h3>作る(単純なルールで)</h3>
+
+                                上のやつでいいじゃん！って思ったそこの貴方！残念！上のコードは欠陥品なのだ。なぜなら(一般的な言語であれば)変数に入れることができる最大値というのは決まっており、もしもそれを超えてしまった場合はオーバーフローにより結果が滅茶苦茶になってしまう。主な原因は\(_nC_r\)を計算する際に小数点が出ないよう除算の前に全ての値を乗算したことだ。</br>
+                                </br>
+                                以上の反省を踏まえて、次は加算だけで生成できるプログラムを書く。
+
+                                <div class="blockcode">
+<pre>
+WinX = 640 // ---------------------- ウィンドウの横幅
+WinY = 480 // ---------------------- ウィンドウの縦幅
+PosX = (ginfo(20) - WinX) / 2 // --- ウィンドウの横位置(中央)
+PosY = (ginfo(21) - WinY) / 2 // --- ウィンドウの縦位置(中央)
+
+screen 0 , WinX,WinY , 0 , PosX,PosY // --- ウィンドウを生成
+font "Courier New" , 12 // ---------------- フォント名とフォントサイズ
+</pre>
+                                </div>
+
+                                …ここで、ふと私は気になった。あれ、HSP3には数値(int)だけではなく実数(double)も存在すると。</br>
+                                </br>
+                                HSPTV!掲示板<q><a href="http://hsp.tv/play/pforum.php?mode=pastwch&num=67178" target="_blank" rel="noopener noreferrer">変数に入れられる最大値について</a></q>より
+                                <blockquote>
+                                    Q. </br>
+                                    </br>
+                                    人口 = 7234404200</br>
+                                    mes 人口</br>
+                                    stop</br>
+                                    </br>
+                                    このサンプルを使うと-1355530392 と言う数字になってしまいます。</br>
+                                    指定した通り(7234404200)に表記することはできるでしょうか？</br>
+                                    </br>
+                                    A. </br>
+                                    </br>
+                                    計算結果の桁数が大きくなるなら計算に使う数値自体も実数(double)にしたほうが良い。</br>
+                                    </br>
+                                    暗黙的な変数は数値はint型(符号付32bit整数)、文字はCP932(Microsoft拡張シフトJIS(!ISO-2022-JP))なので、明示的にdoubleとして宣言すれば大丈夫です。
+                                </blockquote>
+                                <b><span class="red">あったぁぁぁぁぁうわぁぁぁぁぁんぅクソがぁぁぁぁぁ！</span></b></br>
+                                </br>
+                                というわけで実数を使って書きます。
+
+                                <div class="blockcode">
+<pre>
+origin = 59 // ------------------- 作る段数
+notesel result // ---------------- ここにパスカルの三角形を入れる
+ddim export , origin,origin // --- ここに各値を入れる(2次元の実数の配列)
+
+repeat origin // --- origin段分を生成する
+    sector = cnt // ---- 段数を変数に保存する
+
+    if sector != 0 { // ---- 0段目以外は例の処理をする
+        repeat sector + 1 // --- 段数目の配列を生成する (ex. 1段目なら2個あるよ)
+
+            if cnt = 0 | cnt = sector { // --- 両端は1を入れる
+                export(cnt,sector) = 1.0 // ------ 1を入れる
+            } else { // ---------------------- 両端以外は左上と右上を足した値を入れる
+
+                export(cnt,sector) = export(cnt-1,sector-1) + export(cnt,sector-1) // --- 左上(1つ上の段の1つ右の値) + 右上(1つ上の段の値)
+            }
+        loop
+    } else { // ---------- 0段目
+        export(0) = 1.0 // --- 1を入れる
+    }
+
+    export_str = ""+strf("%4d",sector)+" :" // --------------- 段数目の全ての配列を入れる変数＆左側に段数を表示する ※0から始まるよ！
+    repeat sector + 1 // ------------------------------------- 各値を段数目に出力する
+        export_str += " "+strf("%16.0f",export(cnt,sector)) // --- 値を追加する
+    loop
+
+    noteadd export_str , cnt , 1 // --- 全体に(段数目の配列を)出力する
+loop
+
+objmode 2 // ----------------------- mesboxのフォントを指定
+mesbox result , WinX,WinY , 4 // --- 出力！
+</pre>
+                                </div>
+
+                                ちなみに上のコードはブログと同時並行で書いたものだが、書いてみると簡単なルールのほうがスマートなうえに拡張性もあることに気付いた。ｇｄｇｄな記事で本当に申し訳ない。</br>
+                                </br>
+                                出力結果はこんな感じ。宣言通り以前よりも多くの段数が出力できている…が、今回の場合だと表示に限界があり59段目以降は1行に収まらない。(もちろん配列に含まれる値は正常である。)
+
+                                <img src="/media/0016/06.png" />
+
+                        <h2>フラクタル図形</h2>
+
+                            無事に出力できて満足…ではない。実はパスカルの三角形を求めた本当の理由は別にあり、それは<b>フラクタル：自己相似性</b>を再現するためだ。</br>
+                            </br>
+                            「フラクタル」とは日本語訳の通り自己相似性を持つ幾何学の概念・(主に)図形のことであり、図形の一部分と全体が自己相似しているものをそう呼ぶ。簡単に要約すれば「決められた形のピースを永遠に(規則的に)並べることで同じ形かつ巨大な形が出来上がる」ような感覚だ。例えば<b>マンデルブロ集合</b>だったり<b>メンガーのスポンジ</b>なんて単語は聞いたことがあるかもしれない。分からなければ画像からフラクタルというものを肌で感じたほうが手っ取り早いだろう。(数学的に説明をするのはちょいと難しい。)
+
+                            <div class="p50">
+                                <img src="/media/0016/07.jpg" />
+                                <img src="/media/0016/08.png" />
+                            </div>
+
+                            左図：<q><a href="https://commons.wikimedia.org/wiki/File:Mandel_zoom_00_mandelbrot_set.jpg" target="_blank" rel="noopener noreferrer">Mandel zoom 00 mandelbrot set by Wolfgang Beyer</a></q></br>
+                            右図：(準備中)</br>
+                            </br>
+                            フラクタルの神秘性に絶賛する人間もいれば気持ち悪さから拒絶する人間もいるが、個人的に自己相似性は万物に共通する考え方だと思っている。君は、フラクタル好きかい？(うん！大好きさ！)
+
+                            <h3>シェルピンスキーのギャスケット</h3>
+
+                                では、パスカルの三角形が見せる一面とは何なのか。それは<b>シェルピンスキーのギャスケット</b>という図形が表せられることだ。</br>
+                                </br>
+                                この図形を作るには(一例として)正三角形の中を永遠に逆正三角形で切り抜く作業を要するが、何と、パスカルの三角形の各値を奇数・偶数で分けることでも同じ図形が作られる。更に前者がマクロ(全体)から作図するのに対して後者はミクロ(最小)から作図するため、コンピューター・プログラムの場合は後者の方法が適していると謂える。(しかし限界はある。)
+
+                                <img src="/media/0016/09.png" />
+
+                                図：<q><a href="https://commons.wikimedia.org/wiki/File:SierpinskiTriangle.PNG" target="_blank" rel="noopener noreferrer">SierpinskiTriangle.PNG by Nol Aders</a></q>
+
+                        <h2>プログラムで描く</h2>
+
+                            それでは作ろう。先程のコードを流用して、とりあえずテキトーに書いてみる。
+
+                            <div class="blockcode">
+<pre>
+delete "hsptmp"
+delete "obj"
+
+WinX = 640 // ---------------------- ウィンドウの横幅
+WinY = 480 // ---------------------- ウィンドウの縦幅
+PosX = (ginfo(20) - WinX) / 2 // --- ウィンドウの横位置(中央)
+PosY = (ginfo(21) - WinY) / 2 // --- ウィンドウの縦位置(中央)
+
+screen 0 , WinX,WinY , 0 , PosX,PosY // --- ウィンドウを生成
+
+origin = 58 // ------------------- 作る段数
+ddim export , origin,origin // --- ここに各値を入れる(2次元の実数の配列)
+
+repeat origin // --- origin段分を生成する
+    sector = cnt // ---- 段数を変数に保存する
+
+    if sector != 0 { // ---- 0段目以外は例の処理をする
+        repeat sector + 1 // --- 段数目の配列を生成する (ex. 1段目なら2個あるよ)
+            if cnt = 0 | cnt = sector { // --- 両端は1を入れる
+                export(cnt,sector) = 1.0 // ------ 1を入れる
+            } else { // ---------------------- 両端以外は左上と右上を足した値を入れる
+                export(cnt,sector) = export(cnt-1,sector-1) + export(cnt,sector-1) // --- 左上(1つ上の段の1つ右の値) + 右上(1つ上の段の値)
+            }
+        loop
+    } else { // ---------- 0段目
+        export(0) = 1.0 // --- 1を入れる
+    }
+loop
+
+repeat sector
+    y_b = cnt // --- Y座標
+    repeat cnt + 1
+        x_b = cnt // --- X座標
+
+        x = (WinX / 2) - (y_b * 2) + (x_b * 4) // --- 実際に描画するX座標(三角形が中央に配置されるように)
+        y = y_b * 3 // ------------------------------ 実際に描画するY座標
+
+        if export(x_b,y_b) \ 2 = 0 { // --- 余が0(偶数)の場合
+            color 0,0,0 // -------------------- 黒色
+        } else { // ----------------------- 余が1(奇数)の場合
+            color 255,255,255 // -------------- 白色
+        }
+        boxf x,y , x+1,y+1 // --- 描画！
+    loop
+loop
+</pre>
+                            </div>
+
+                            出力結果はこんな感じ。本当は画面の下まで描画したかったが、なぜか58段目から正常に表示されないので残念無念。しかし我ながら綺麗に描けたと思う。
+
+                            <img src="/media/0016/10.png" />
+
+                            <h3>反省と改善点</h3>
+
+                                素直に図形を駆使して描けばよかった。いや…私はそれでもロマンを求めたいのだ。(´・ω・｀)
+
+                        <h2>参考</h2>
+
+                        本文にリンクを埋めようと思ったが、上手い誘導方法が分からなかったので纏めて以下に示す。詳しく知りたい人へ是非。それでは！</br>
+                        </br>
+                        <ul>
+                            <li><a href="http://www.パスカルの三角形.jp/pascul-nature.html" target="_blank" rel="noopener noreferrer">パスカルの三角形 Pascal's triangle</a> ← おすすめ</li>
+                            <li><a href="http://www.mathlion.jp/article/ar103.html" target="_blank" rel="noopener noreferrer">思考を鍛える数学 - パスカルの三角形と最短経路</a> ← おすすめ</li>
+                            <li><a href="https://ja.wikipedia.org/wiki/%E3%83%91%E3%82%B9%E3%82%AB%E3%83%AB%E3%81%AE%E4%B8%89%E8%A7%92%E5%BD%A2" target="_blank" rel="noopener noreferrer">Wiki - パスカルの三角形</a></li>
+                            <li><a href="https://ja.wikipedia.org/wiki/%E4%BA%8C%E9%A0%85%E5%AE%9A%E7%90%86" target="_blank" rel="noopener noreferrer">Wiki - 二項定理</a></li>
+                            <li><a href="https://ja.wikipedia.org/wiki/%E4%BA%8C%E9%A0%85%E4%BF%82%E6%95%B0" target="_blank" rel="noopener noreferrer">Wiki - 二項係数</a></li>
+                            <li><a href="https://ja.wikipedia.org/wiki/%E3%83%95%E3%83%A9%E3%82%AF%E3%82%BF%E3%83%AB" target="_blank" rel="noopener noreferrer">Wiki - フラクタル</a></li>
+                            <li><a href="https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%B3%E3%83%87%E3%83%AB%E3%83%96%E3%83%AD%E9%9B%86%E5%90%88" target="_blank" rel="noopener noreferrer">Wiki - マンデルブロ集合</a></li>
+                            <li><a href="https://ja.wikipedia.org/wiki/%E3%83%A1%E3%83%B3%E3%82%AC%E3%83%BC%E3%81%AE%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B8" target="_blank" rel="noopener noreferrer">Wiki - メンガーのスポンジ</a></li>
+                            <li><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%82%A7%E3%83%AB%E3%83%94%E3%83%B3%E3%82%B9%E3%82%AD%E3%83%BC%E3%81%AE%E3%82%AE%E3%83%A3%E3%82%B9%E3%82%B1%E3%83%83%E3%83%88" target="_blank" rel="noopener noreferrer">Wiki - シェルピンスキーのギャスケット</a></li>
+                        </ul>
+                        <!-- EoF -->
+                    </div>
+                </div>
+                <div id="sidebar"></div>
+            </div>
+            <div id="footer"></div>
+        </main>
+        <script src="/page.js" type="text/javascript"></script>
+        <script src="/common-parts.js" type="text/javascript"></script>
+    </body>
+</html>
