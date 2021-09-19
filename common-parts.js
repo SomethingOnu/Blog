@@ -48,8 +48,8 @@ sidebar.insertAdjacentHTML(
             ・<a href="https://github.com/SomethingOnu" target="_blank" rel="noopener noreferrer">GitHub</a></br>
             ・<a href="https://www.pixiv.net/users/63404396" target="_blank" rel="noopener noreferrer">Pixiv</a>
             <div class="category">外部リンク</div>
-            ・<a href="https://0nu.be/" target="_blank" rel="noopener noreferrer">0nu.be (旧ホームページ)</a></br>
-            ・<a href="https://zodiacnetwork.0nu.be/" target="_blank" rel="noopener noreferrer">Zodiac Network</a></br>
+            ・<a href="https://0nu.be/" target="_blank" rel="noopener noreferrer">ホームページ</a></br>
+            ・<a href="https://skaldworld.0nu.be/" target="_blank" rel="noopener noreferrer">Skald World</a></br>
             ・<a href="https://dotplants.net/" target="_blank" rel="noopener noreferrer">dotPlants</a>
             <div class="category">寄付</div>
             ・<a href="https://www.amazon.jp/hz/wishlist/ls/1RSKN9E87ZJLI?ref_=wl_share" target="_blank" rel="noopener noreferrer">Amazon</a></br>
